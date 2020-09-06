@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Mission to Mars</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="jumbotron">
+      <h1 class="header" style="color: #FFF; font-weight: normal; text-shadow: #000 2px 2px 3px;">Mission to Mars</h1>
+      <p class="button-p"><a class="btn btn-primary btn-lg button-text" href="/scrape" role="button">Scrape New Data</a></p>
+    </div>
+
+    {% if mars.news_title %}
+    <div class="container-fluid">
+      <div class="row news-weather">
+        <div class="col-md-6 col-xs-12 left">
+          <div class="card news">
+            <h3 class="card-header header">Latest Mars News</h3>
+            <div class="card-body">
+              <h5 class="card-title header">{{ mars["news_title"] }}</h5>
+              <p class="card-text">{{ mars["news_p"] }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-xs-12 right">
+          <div class="current-weather card">
+            <h3 class="card-header header weather-header">Current Weather on Mars</h3>
+            <p class="card-text">{{ mars["mars_weather"] }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row feature-fact">
+        <div class="col-md-6 col-xs-12 left">
+          <div class="featured-image card">
+            <h3 class="card-header header">Featured Mars Image</h3>
+            <img class="card-img-bottom" src={{ mars["featured_image_url"] }} alt="Featured Mars Image">
+          </div>
+        </div>
+        <div class="col-md-6 col-xs-12 right">
+          <div class="mars-facts card">
+            <h3 class="card-header header">Mars Facts</h3>
+            <div class="table-responsive">
+              <table class="table table-striped table-hover table-sm">
+                {{ mars.table_html | safe }}
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row hemispheres">
+            <h3 class="header header-hemispheres">Mars Hemisphere</h3>
+            {% for item in mars["hemisphere_image_urls"] %}
+              <div class="col-md-6 col-xs-12">
+                <div class="card card-hemispheres"> 
+                  <div class="card-body card-body-hemisphere">
+                    <img class="card-img-top" src={{ item.img_url }} alt="Mars hemisphere image">
+                    <h5 class="card-title header hemisphere-title">{{ item.title }}</h5>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+    
+
+  </div>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+  <script src="app.py"></script>
+  <script src="scrape_mars.py"></script>
+</body>
+
+</html>
